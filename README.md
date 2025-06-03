@@ -1,2 +1,1 @@
-# var_call
-Variant calling for Aspergillus fumigatus
+## Variant calling for Aspergillus fumigatus
