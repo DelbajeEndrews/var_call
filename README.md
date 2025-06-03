@@ -2,7 +2,9 @@
 
 The scripts in this repository were used in the manuscript titled **Increased azole persistence precedes azole resistance acquisition of the human fungal pathogen _Aspergillus fumigatus_** for variant calling.
 
+
 This pipeline was applied to sequencing data from **9 newly sequenced serial isolates** and **339 publicly available whole-genome sequences (WGS)**.
+
 
 Summary of the workflow (with associated scripts in parentheses):
 1. **Quality control** of Illumina reads using Trimmomatic (_trimmomatic.sh_);
