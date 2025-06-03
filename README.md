@@ -1,1 +1,2 @@
-## Variant calling for Aspergillus fumigatus
+## Variant calling for _Aspergillus fumigatus_
+
