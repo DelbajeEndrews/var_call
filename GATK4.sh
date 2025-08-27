@@ -96,9 +96,11 @@ gatk CombineGVCFs --reference $reference \
 --variant haplotypes/LIF3608.vcf \
 -O combined/combined.vcf
 
+gatk GenotypeGVCFs -V combined.vcf -O combined/combined_genotyped.vcf --reference $reference
+
 ## filter combined VCF file
 gatk VariantFiltration -R $reference \
-   -V combined/combined.vcf \
+   -V combined/combined_genotyped.vcf \
    -O combined/combined_filt.vcf \
    --filter-expression "QD < 2.0" --filter-name "QualByDepth" \
    --filter-expression "MQRankSum < -12.5" --filter-name "MappingQualityRankSumTest" \
