@@ -377,8 +377,26 @@ gatk CombineGVCFs --reference $reference \
 --variant haplotypes/LIF3608.vcf \
 -O combined.vcf
 
+gatk GenotypeGVCFs -V combined.vcf -O combined_genotyped.vcf --reference $reference
+
+## filter combined VCF file
+gatk VariantFiltration -R $reference \
+   -V combined_genotyped.vcf \
+   -O combined_filt.vcf \
+   --filter-expression "QD < 2.0" --filter-name "QualByDepth" \
+   --filter-expression "MQRankSum < -12.5" --filter-name "MappingQualityRankSumTest" \
+   --filter-expression "FS > 8.0" --filter-name "FisherStrand" \
+   --filter-expression "SOR > 3.0" --filter-name "StrandOddsRatio" \
+   --filter-expression "ReadPosRankSum < -2.0" --filter-name "ReadPosRankSumTest" \
+   --filter-expression "ReadPosRankSum > 2.0" --filter-name "ReadPosRankSumTest" \
+   --filter-expression "MQ < 4.0" --filter-name "MappingQuality"
+
+gatk SelectVariants -R $reference -V combined/$name"_filt.vcf" --exclude-filtered true -O combined/combined_final.vcf
+rm -rf combined_filt.vcf
+rm -rf combined_filt.vcf.idx
+
 # convert SNP data (VCF) to alignment (FASTA)
-python3 /Storage/user/programs/vcf2phylip.py -i combined.vcf --output-folder out --fasta
+python3 /Storage/user/programs/vcf2phylip.py -i combined_filt.vcf --output-folder out --fasta
 
 # Run phylogenetic analysis with IQtree (the best model tested was GTR+F+I+G4+ASC)
 iqtree -s combined.min4.varsites.fasta -B 1000 --seqtype DNA -m TEST -T 3
