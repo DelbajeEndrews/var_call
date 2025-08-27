@@ -81,7 +81,7 @@ for bam in $(ls MAPs/*_sorted.bam); do
 done
 
 
-###### ------------------------------------ combined VCF files pipeline -------------------------------#########
+###### ---------------------------- combined VCF files pipeline for the phylogenetic tree and haplotypes network analyses ---------------------------#########
 
 ## Combine VCF files
 gatk CombineGVCFs --reference $reference \
