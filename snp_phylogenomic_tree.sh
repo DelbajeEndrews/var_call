@@ -391,12 +391,12 @@ gatk VariantFiltration -R $reference \
    --filter-expression "ReadPosRankSum > 2.0" --filter-name "ReadPosRankSumTest" \
    --filter-expression "MQ < 4.0" --filter-name "MappingQuality"
 
-gatk SelectVariants -R $reference -V combined/$name"_filt.vcf" --exclude-filtered true -O combined/combined_final.vcf
+gatk SelectVariants -R $reference -V combined_filt.vcf --exclude-filtered true -O combined_final.vcf
 rm -rf combined_filt.vcf
 rm -rf combined_filt.vcf.idx
 
 # convert SNP data (VCF) to alignment (FASTA)
-python3 /Storage/user/programs/vcf2phylip.py -i combined_filt.vcf --output-folder out --fasta
+python3 /Storage/user/programs/vcf2phylip.py -i combined_final.vcf --output-folder out --fasta
 
 # Run phylogenetic analysis with IQtree (the best model tested was GTR+F+I+G4+ASC)
 iqtree -s combined.min4.varsites.fasta -B 1000 --seqtype DNA -m TEST -T 3
